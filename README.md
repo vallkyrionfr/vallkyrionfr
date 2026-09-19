@@ -3,9 +3,11 @@
 </p>
 
 <p align="center">
-  <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&size=16&duration=2800&pause=1200&color=F4F3EE&center=true&vCenter=true&width=560&lines=Building+zero-bloat+systems+%26+modern+developer+tools.;Creator+of+OmniLens+%26+Smart+File+Cleaner.;Systems+Architecture+%7C+Browser+Extensions+%7C+CLI." alt="Typing SVG" />
-  </a>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&amp;size=16&amp;duration=2800&amp;pause=1200&amp;color=F4F3EE&amp;center=true&amp;vCenter=true&amp;width=560&amp;lines=Building+zero-bloat+systems+%26+modern+developer+tools.;Creator+of+OmniLens+%26+Smart+File+Cleaner.;Systems+Architecture+%7C+Browser+Extensions+%7C+CLI." />
+    <source media="(prefers-color-scheme: light)" srcset="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&amp;size=16&amp;duration=2800&amp;pause=1200&amp;color=18181B&amp;center=true&amp;vCenter=true&amp;width=560&amp;lines=Building+zero-bloat+systems+%26+modern+developer+tools.;Creator+of+OmniLens+%26+Smart+File+Cleaner.;Systems+Architecture+%7C+Browser+Extensions+%7C+CLI." />
+    <img src="https://readme-typing-svg.demolab.com?font=JetBrains+Mono&amp;size=16&amp;duration=2800&amp;pause=1200&amp;color=18181B&amp;center=true&amp;vCenter=true&amp;width=560&amp;lines=Building+zero-bloat+systems+%26+modern+developer+tools.;Creator+of+OmniLens+%26+Smart+File+Cleaner.;Systems+Architecture+%7C+Browser+Extensions+%7C+CLI." alt="Typing SVG" />
+  </picture>
 </p>
 
 ---
