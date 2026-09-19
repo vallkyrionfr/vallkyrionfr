@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="100%" height="440">
+  <defs>
+    <style>
+      @keyframes typeCommand {
+        0%, 12% { width: 0; }
+        26%, 100% { width: 330px; }
+      }
+      @keyframes showOutput {
+        0%, 28% { opacity: 0; transform: translateY(6px); }
+        36%, 100% { opacity: 1; transform: translateY(0); }
+      }
+      @keyframes cursorBlink {
+        0%, 49% { opacity: 1; }
+        50%, 100% { opacity: 0; }
+      }
+      @keyframes windowLoop {
+        0%, 93% { opacity: 1; }
+        97%, 100% { opacity: 0; }
+      }
+
+      .session-wrapper {
+        animation: windowLoop 15s ease-in-out infinite;
+      }
+      .cmd-type {
+        overflow: hidden;
+        white-space: nowrap;
+        display: inline-block;
+        animation: typeCommand 15s steps(28, end) infinite;
+      }
+      .output-pane {
+        animation: showOutput 15s ease-out infinite;
+      }
+      .blink-cursor {
+        animation: cursorBlink 0.8s infinite;
+      }
+
+      .font-mono {
+        font-family: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+      }
+      .win-title {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+        fill: #a1a1aa;
+      }
+    </style>
+
+    <linearGradient id="termBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0e0e11" />
+      <stop offset="100%" stop-color="#08080a" />
+    </linearGradient>
+
+    <linearGradient id="headerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#18181b" />
+      <stop offset="100%" stop-color="#111113" />
+    </linearGradient>
+  </defs>
+
+  <!-- Window Frame -->
+  <rect x="1" y="1" width="878" height="438" rx="12" fill="url(#termBg)" stroke="#27272a" stroke-width="1.5" />
+
+  <!-- Window Header -->
+  <path d="M 1 13 C 1 6.5 6.5 1 13 1 L 867 1 C 873.5 1 879 6.5 879 13 L 879 38 L 1 38 Z" fill="url(#headerGrad)" stroke="#27272a" stroke-width="1" />
+  <line x1="1" y1="38" x2="879" y2="38" stroke="#27272a" stroke-width="1" />
+
+  <!-- Control Dots -->
+  <circle cx="22" cy="19" r="6" fill="#ef4444" fill-opacity="0.85" />
+  <circle cx="42" cy="19" r="6" fill="#f59e0b" fill-opacity="0.85" />
+  <circle cx="62" cy="19" r="6" fill="#10b981" fill-opacity="0.85" />
+
+  <text x="440" y="24" text-anchor="middle" class="win-title">valk@workstation:~ (zsh)</text>
+
+  <!-- Content -->
+  <g class="session-wrapper" transform="translate(28, 48)">
+
+    <!-- Command Prompt -->
+    <g transform="translate(0, 24)">
+      <text x="0" y="0" class="font-mono" font-size="13" font-weight="600" fill="#10b981">~</text>
+      <text x="14" y="0" class="font-mono" font-size="13" font-weight="500" fill="#71717a">$</text>
+
+      <foreignObject x="30" y="-14" width="380" height="24">
+        <div xmlns="http://www.w3.org/1999/xhtml" class="cmd-type font-mono" style="font-size: 13px; font-weight: 600; color: #f4f3ee;">
+          curl -s https://api.valk.dev/whoami | jq
+        </div>
+      </foreignObject>
+    </g>
+
+    <!-- Formatted JSON Output -->
+    <g class="output-pane font-mono" font-size="12" transform="translate(0, 56)">
+      <text x="0" y="0" fill="#71717a">{</text>
+      
+      <text x="20" y="22">
+        <tspan fill="#06b6d4">"developer"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#f4f3ee">"Valk"</tspan><tspan fill="#71717a">,</tspan>
+      </text>
+
+      <text x="20" y="44">
+        <tspan fill="#06b6d4">"handle"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#10b981">"@vescofr-oxy"</tspan><tspan fill="#71717a">,</tspan>
+      </text>
+
+      <text x="20" y="66">
+        <tspan fill="#06b6d4">"focus"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#f4f3ee">["Systems Architecture", "Browser Extensions", "CLI Tooling"]</tspan><tspan fill="#71717a">,</tspan>
+      </text>
+
+      <text x="20" y="88">
+        <tspan fill="#06b6d4">"stack"</tspan><tspan fill="#71717a">: {</tspan>
+      </text>
+      
+      <text x="40" y="110">
+        <tspan fill="#a78bfa">"primary"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#f4f3ee">["Python", "TypeScript", "JavaScript", "Rust"]</tspan><tspan fill="#71717a">,</tspan>
+      </text>
+      
+      <text x="40" y="132">
+        <tspan fill="#a78bfa">"environment"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#f4f3ee">"Linux / Arch / Bash / Neovim"</tspan><tspan fill="#71717a">,</tspan>
+      </text>
+      
+      <text x="40" y="154">
+        <tspan fill="#a78bfa">"architecture"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#f4f3ee">"Zero-Bloat, High-Precision, Production-Ready"</tspan>
+      </text>
+      
+      <text x="20" y="176" fill="#71717a">},</text>
+
+      <text x="20" y="198">
+        <tspan fill="#06b6d4">"active_projects"</tspan><tspan fill="#71717a">: [</tspan>
+      </text>
+
+      <text x="40" y="220">
+        <tspan fill="#10b981">"omnilens"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#a1a1aa">"In-Page Web Intelligence &amp; Diagnostics Suite (MV3)"</tspan><tspan fill="#71717a">,</tspan>
+      </text>
+
+      <text x="40" y="242">
+        <tspan fill="#10b981">"smart-file-cleaner"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#a1a1aa">"Cross-Platform Safe Storage Organizer &amp; 3-Tier Dedup"</tspan><tspan fill="#71717a">,</tspan>
+      </text>
+
+      <text x="40" y="264">
+        <tspan fill="#10b981">"monkeytype-bot"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#a1a1aa">"Humanoid Typing Extension with Jitter Acceleration"</tspan>
+      </text>
+
+      <text x="20" y="286" fill="#71717a">],</text>
+
+      <text x="20" y="308">
+        <tspan fill="#06b6d4">"status"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#10b981">"Building open-source software daily"</tspan>
+      </text>
+
+      <text x="0" y="330" fill="#71717a">}</text>
+    </g>
+
+    <!-- Bottom active prompt line -->
+    <g class="output-pane" transform="translate(0, 412)">
+      <text x="0" y="0" class="font-mono" font-size="13" font-weight="600" fill="#10b981">~</text>
+      <text x="14" y="0" class="font-mono" font-size="13" font-weight="500" fill="#71717a">$</text>
+      <rect x="28" y="-12" width="7" height="14" rx="1" fill="#10b981" class="blink-cursor" />
+    </g>
+
+  </g>
+</svg>
