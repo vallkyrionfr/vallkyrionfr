@@ -1,42 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 440" width="100%" height="440">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 540" width="100%" height="540">
   <defs>
     <style>
-      @keyframes typeCommand {
-        0%, 12% { width: 0; }
-        26%, 100% { width: 330px; }
-      }
-      @keyframes showOutput {
-        0%, 28% { opacity: 0; transform: translateY(6px); }
-        36%, 100% { opacity: 1; transform: translateY(0); }
-      }
       @keyframes cursorBlink {
         0%, 49% { opacity: 1; }
         50%, 100% { opacity: 0; }
       }
-      @keyframes windowLoop {
-        0%, 93% { opacity: 1; }
-        97%, 100% { opacity: 0; }
+      @keyframes scanline {
+        0% { transform: translateY(-10px); opacity: 0; }
+        50% { opacity: 0.15; }
+        100% { transform: translateY(530px); opacity: 0; }
+      }
+      @keyframes valkGlow {
+        0%, 100% { filter: drop-shadow(0 0 2px rgba(16, 185, 129, 0.4)); }
+        50% { filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.7)); }
       }
 
-      .session-wrapper {
-        animation: windowLoop 15s ease-in-out infinite;
-      }
-      .cmd-type {
-        overflow: hidden;
-        white-space: nowrap;
-        display: inline-block;
-        animation: typeCommand 15s steps(28, end) infinite;
-      }
-      .output-pane {
-        animation: showOutput 15s ease-out infinite;
+      .valk-ascii {
+        animation: valkGlow 4s ease-in-out infinite;
       }
       .blink-cursor {
-        animation: cursorBlink 0.8s infinite;
+        animation: cursorBlink 0.9s infinite;
+      }
+      .scanline-beam {
+        animation: scanline 6s linear infinite;
       }
 
       .font-mono {
-        font-family: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+        font-family: "JetBrains Mono", "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
       }
       .win-title {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -47,109 +38,200 @@
     </style>
 
     <linearGradient id="termBg" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#0e0e11" />
-      <stop offset="100%" stop-color="#08080a" />
+      <stop offset="0%" stop-color="#0c0c0f" />
+      <stop offset="100%" stop-color="#070709" />
     </linearGradient>
 
     <linearGradient id="headerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#18181b" />
       <stop offset="100%" stop-color="#111113" />
     </linearGradient>
+
+    <linearGradient id="valkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="60%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+
+    <linearGradient id="scanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0" />
+      <stop offset="50%" stop-color="#10b981" stop-opacity="0.25" />
+      <stop offset="100%" stop-color="#10b981" stop-opacity="0" />
+    </linearGradient>
   </defs>
 
-  <!-- Window Frame -->
-  <rect x="1" y="1" width="878" height="438" rx="12" fill="url(#termBg)" stroke="#27272a" stroke-width="1.5" />
+  <!-- Window Outer Shell -->
+  <rect x="1" y="1" width="918" height="538" rx="12" fill="url(#termBg)" stroke="#27272a" stroke-width="1.5" />
 
-  <!-- Window Header -->
-  <path d="M 1 13 C 1 6.5 6.5 1 13 1 L 867 1 C 873.5 1 879 6.5 879 13 L 879 38 L 1 38 Z" fill="url(#headerGrad)" stroke="#27272a" stroke-width="1" />
-  <line x1="1" y1="38" x2="879" y2="38" stroke="#27272a" stroke-width="1" />
+  <!-- Subtle Animated CRT Scanline -->
+  <rect x="2" y="38" width="916" height="30" fill="url(#scanGrad)" class="scanline-beam" />
 
-  <!-- Control Dots -->
+  <!-- Terminal Title Bar -->
+  <path d="M 1 13 C 1 6.5 6.5 1 13 1 L 907 1 C 913.5 1 919 6.5 919 13 L 919 38 L 1 38 Z" fill="url(#headerGrad)" stroke="#27272a" stroke-width="1" />
+  <line x1="1" y1="38" x2="919" y2="38" stroke="#27272a" stroke-width="1" />
+
+  <!-- Window Dots -->
   <circle cx="22" cy="19" r="6" fill="#ef4444" fill-opacity="0.85" />
   <circle cx="42" cy="19" r="6" fill="#f59e0b" fill-opacity="0.85" />
   <circle cx="62" cy="19" r="6" fill="#10b981" fill-opacity="0.85" />
 
-  <text x="440" y="24" text-anchor="middle" class="win-title">valk@workstation:~ (zsh)</text>
+  <!-- Title Text -->
+  <text x="460" y="24" text-anchor="middle" class="win-title">valk@archbox: ~ (zsh)</text>
 
-  <!-- Content -->
-  <g class="session-wrapper" transform="translate(28, 48)">
+  <!-- Terminal Session -->
+  <g transform="translate(32, 52)">
 
-    <!-- Command Prompt -->
-    <g transform="translate(0, 24)">
-      <text x="0" y="0" class="font-mono" font-size="13" font-weight="600" fill="#10b981">~</text>
-      <text x="14" y="0" class="font-mono" font-size="13" font-weight="500" fill="#71717a">$</text>
-
-      <foreignObject x="30" y="-14" width="380" height="24">
-        <div xmlns="http://www.w3.org/1999/xhtml" class="cmd-type font-mono" style="font-size: 13px; font-weight: 600; color: #f4f3ee;">
-          curl -s https://api.valk.dev/whoami | jq
-        </div>
-      </foreignObject>
+    <!-- Command 1: Fastfetch Execution -->
+    <g transform="translate(0, 20)">
+      <text x="0" y="0" class="font-mono" font-size="13" font-weight="700" fill="#10b981">valk@archbox</text>
+      <text x="100" y="0" class="font-mono" font-size="13" fill="#71717a">:</text>
+      <text x="110" y="0" class="font-mono" font-size="13" font-weight="700" fill="#06b6d4">~</text>
+      <text x="122" y="0" class="font-mono" font-size="13" fill="#f4f3ee">$ fastfetch</text>
     </g>
 
-    <!-- Formatted JSON Output -->
-    <g class="output-pane font-mono" font-size="12" transform="translate(0, 56)">
-      <text x="0" y="0" fill="#71717a">{</text>
-      
-      <text x="20" y="22">
-        <tspan fill="#06b6d4">"developer"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#f4f3ee">"Valk"</tspan><tspan fill="#71717a">,</tspan>
-      </text>
+    <!-- Fastfetch Main Output Block -->
+    <g transform="translate(0, 36)">
 
-      <text x="20" y="44">
-        <tspan fill="#06b6d4">"handle"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#10b981">"@vescofr-oxy"</tspan><tspan fill="#71717a">,</tspan>
-      </text>
+      <!-- LEFT: Cool VALK ASCII Art & Hardware Pills -->
+      <g transform="translate(0, 16)">
+        <!-- ASCII Art in Glowing Gradient -->
+        <g fill="url(#valkGrad)" class="font-mono valk-ascii" font-size="13" font-weight="900" letter-spacing="0.04em">
+          <text x="0" y="20">██╗   ██╗ █████╗ ██╗     ██╗  ██╗</text>
+          <text x="0" y="38">██║   ██║██╔══██╗██║     ██║ ██╔╝</text>
+          <text x="0" y="56">██║   ██║███████║██║     █████╔╝ </text>
+          <text x="0" y="74">╚██╗ ██╔╝██╔══██║██║     ██╔═██╗ </text>
+          <text x="0" y="92"> ╚████╔╝ ██║  ██║███████╗██║  ██╗</text>
+          <text x="0" y="110">  ╚═══╝  ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝</text>
+        </g>
 
-      <text x="20" y="66">
-        <tspan fill="#06b6d4">"focus"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#f4f3ee">["Systems Architecture", "Browser Extensions", "CLI Tooling"]</tspan><tspan fill="#71717a">,</tspan>
-      </text>
+        <!-- Hardware & System Badges -->
+        <g transform="translate(0, 138)">
+          <!-- Pill 1: OS / Kernel -->
+          <rect x="0" y="0" width="316" height="24" rx="4" fill="#121216" stroke="#27272a" stroke-width="1" />
+          <text x="12" y="16" class="font-mono" font-size="10.5" font-weight="700" fill="#10b981">ARCH</text>
+          <text x="48" y="16" class="font-mono" font-size="10" fill="#a1a1aa">x86_64 // ROLLING RELEASE</text>
 
-      <text x="20" y="88">
-        <tspan fill="#06b6d4">"stack"</tspan><tspan fill="#71717a">: {</tspan>
-      </text>
-      
-      <text x="40" y="110">
-        <tspan fill="#a78bfa">"primary"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#f4f3ee">["Python", "TypeScript", "JavaScript", "Rust"]</tspan><tspan fill="#71717a">,</tspan>
-      </text>
-      
-      <text x="40" y="132">
-        <tspan fill="#a78bfa">"environment"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#f4f3ee">"Linux / Arch / Bash / Neovim"</tspan><tspan fill="#71717a">,</tspan>
-      </text>
-      
-      <text x="40" y="154">
-        <tspan fill="#a78bfa">"architecture"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#f4f3ee">"Zero-Bloat, High-Precision, Production-Ready"</tspan>
-      </text>
-      
-      <text x="20" y="176" fill="#71717a">},</text>
+          <!-- Pill 2: WM / Display -->
+          <rect x="0" y="32" width="316" height="24" rx="4" fill="#121216" stroke="#27272a" stroke-width="1" />
+          <text x="12" y="48" class="font-mono" font-size="10.5" font-weight="700" fill="#06b6d4">DE/WM</text>
+          <text x="56" y="48" class="font-mono" font-size="10" fill="#a1a1aa">Hyprland (Wayland compositor)</text>
 
-      <text x="20" y="198">
-        <tspan fill="#06b6d4">"active_projects"</tspan><tspan fill="#71717a">: [</tspan>
-      </text>
+          <!-- Pill 3: Editor -->
+          <rect x="0" y="64" width="316" height="24" rx="4" fill="#121216" stroke="#27272a" stroke-width="1" />
+          <text x="12" y="80" class="font-mono" font-size="10.5" font-weight="700" fill="#a78bfa">EDITOR</text>
+          <text x="64" y="80" class="font-mono" font-size="10" fill="#a1a1aa">Neovim (Lua / LSP / Treesitter)</text>
 
-      <text x="40" y="220">
-        <tspan fill="#10b981">"omnilens"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#a1a1aa">"In-Page Web Intelligence &amp; Diagnostics Suite (MV3)"</tspan><tspan fill="#71717a">,</tspan>
-      </text>
+          <!-- Pill 4: Status -->
+          <rect x="0" y="96" width="316" height="24" rx="4" fill="#121216" stroke="#27272a" stroke-width="1" />
+          <text x="12" y="112" class="font-mono" font-size="10.5" font-weight="700" fill="#f59e0b">STATUS</text>
+          <text x="64" y="112" class="font-mono" font-size="10" fill="#a1a1aa">Online // 24/7 Building daily</text>
+        </g>
 
-      <text x="40" y="242">
-        <tspan fill="#10b981">"smart-file-cleaner"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#a1a1aa">"Cross-Platform Safe Storage Organizer &amp; 3-Tier Dedup"</tspan><tspan fill="#71717a">,</tspan>
-      </text>
+        <!-- ANSI Terminal Color Blocks -->
+        <g transform="translate(0, 280)">
+          <!-- Row 1: Standard Colors -->
+          <rect x="0"   y="0" width="35" height="13" rx="2" fill="#27272a" />
+          <rect x="40"  y="0" width="35" height="13" rx="2" fill="#ef4444" />
+          <rect x="80"  y="0" width="35" height="13" rx="2" fill="#10b981" />
+          <rect x="120" y="0" width="35" height="13" rx="2" fill="#f59e0b" />
+          <rect x="160" y="0" width="35" height="13" rx="2" fill="#3b82f6" />
+          <rect x="200" y="0" width="35" height="13" rx="2" fill="#a855f7" />
+          <rect x="240" y="0" width="35" height="13" rx="2" fill="#06b6d4" />
+          <rect x="280" y="0" width="35" height="13" rx="2" fill="#f4f3ee" />
 
-      <text x="40" y="264">
-        <tspan fill="#10b981">"monkeytype-bot"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#a1a1aa">"Humanoid Typing Extension with Jitter Acceleration"</tspan>
-      </text>
+          <!-- Row 2: Bright Colors -->
+          <rect x="0"   y="18" width="35" height="13" rx="2" fill="#52525b" />
+          <rect x="40"  y="18" width="35" height="13" rx="2" fill="#f87171" />
+          <rect x="80"  y="18" width="35" height="13" rx="2" fill="#34d399" />
+          <rect x="120" y="18" width="35" height="13" rx="2" fill="#fbbf24" />
+          <rect x="160" y="18" width="35" height="13" rx="2" fill="#60a5fa" />
+          <rect x="200" y="18" width="35" height="13" rx="2" fill="#c084fc" />
+          <rect x="240" y="18" width="35" height="13" rx="2" fill="#22d3ee" />
+          <rect x="280" y="18" width="35" height="13" rx="2" fill="#ffffff" />
+        </g>
+      </g>
 
-      <text x="20" y="286" fill="#71717a">],</text>
+      <!-- RIGHT: System Specs & Telemetry -->
+      <g transform="translate(356, 16)" class="font-mono" font-size="12">
+        <!-- User @ Host -->
+        <text x="0" y="16">
+          <tspan font-weight="700" fill="#10b981">valk</tspan><tspan fill="#71717a">@</tspan><tspan font-weight="700" fill="#06b6d4">archbox</tspan>
+        </text>
+        <line x1="0" y1="24" x2="495" y2="24" stroke="#27272a" stroke-width="1.5" />
 
-      <text x="20" y="308">
-        <tspan fill="#06b6d4">"status"</tspan><tspan fill="#71717a">: </tspan><tspan fill="#10b981">"Building open-source software daily"</tspan>
-      </text>
+        <!-- Specs lines -->
+        <g transform="translate(0, 24)">
+          <!-- OS -->
+          <text x="0" y="18" fill="#10b981" font-weight="600">OS:</text>
+          <text x="95" y="18" fill="#f4f3ee">Arch Linux x86_64</text>
 
-      <text x="0" y="330" fill="#71717a">}</text>
+          <!-- Host -->
+          <text x="0" y="38" fill="#10b981" font-weight="600">Host:</text>
+          <text x="95" y="38" fill="#f4f3ee">Custom Workstation (Linux-First)</text>
+
+          <!-- Kernel -->
+          <text x="0" y="58" fill="#10b981" font-weight="600">Kernel:</text>
+          <text x="95" y="58" fill="#a1a1aa">6.12.9-arch1-1-zen</text>
+
+          <!-- Uptime -->
+          <text x="0" y="78" fill="#10b981" font-weight="600">Uptime:</text>
+          <text x="95" y="78" fill="#f4f3ee">42 days, 13 hours, 37 mins</text>
+
+          <!-- Packages -->
+          <text x="0" y="98" fill="#10b981" font-weight="600">Packages:</text>
+          <text x="95" y="98" fill="#a1a1aa">1420 (pacman), 48 (pipx), 16 (cargo)</text>
+
+          <!-- Shell -->
+          <text x="0" y="118" fill="#10b981" font-weight="600">Shell:</text>
+          <text x="95" y="118" fill="#f4f3ee">zsh 5.9 (omz / starship)</text>
+
+          <!-- Terminal -->
+          <text x="0" y="138" fill="#10b981" font-weight="600">Terminal:</text>
+          <text x="95" y="138" fill="#f4f3ee">kitty / alacritty</text>
+
+          <!-- Editor -->
+          <text x="0" y="158" fill="#10b981" font-weight="600">Editor:</text>
+          <text x="95" y="158" fill="#f4f3ee">Neovim (v0.10+)</text>
+
+          <!-- WM -->
+          <text x="0" y="178" fill="#10b981" font-weight="600">WM:</text>
+          <text x="95" y="178" fill="#a1a1aa">Hyprland (Wayland / rofi / waybar)</text>
+
+          <!-- Memory -->
+          <text x="0" y="198" fill="#10b981" font-weight="600">Memory:</text>
+          <text x="95" y="198" fill="#f4f3ee">16.4 GiB / 64.0 GiB (25%)</text>
+
+          <!-- Disk -->
+          <text x="0" y="218" fill="#10b981" font-weight="600">Disk (/):</text>
+          <text x="95" y="218" fill="#f4f3ee">412 GiB / 1.8 TiB (23%)</text>
+
+          <line x1="0" y1="232" x2="495" y2="232" stroke="#27272a" stroke-width="1" />
+
+          <!-- Projects Section -->
+          <text x="0" y="250" fill="#06b6d4" font-weight="700">Projects:</text>
+          
+          <text x="0" y="270" fill="#a1a1aa">&gt;</text>
+          <text x="14" y="270" font-weight="700" fill="#10b981">omnilens</text>
+          <text x="82" y="270" fill="#71717a">— In-Page Web Diagnostics &amp; A11y Suite</text>
+
+          <text x="0" y="288" fill="#a1a1aa">&gt;</text>
+          <text x="14" y="288" font-weight="700" fill="#10b981">smart-file-cleaner</text>
+          <text x="156" y="288" fill="#71717a">— Fast Safe Storage CLI &amp; 3-Tier Dedup</text>
+
+          <!-- Stack -->
+          <text x="0" y="308" fill="#06b6d4" font-weight="700">Stack:</text>
+          <text x="56" y="308" font-weight="600" fill="#f4f3ee">Python, TypeScript, Rust, Go, C, Bash</text>
+        </g>
+      </g>
     </g>
 
-    <!-- Bottom active prompt line -->
-    <g class="output-pane" transform="translate(0, 412)">
-      <text x="0" y="0" class="font-mono" font-size="13" font-weight="600" fill="#10b981">~</text>
-      <text x="14" y="0" class="font-mono" font-size="13" font-weight="500" fill="#71717a">$</text>
-      <rect x="28" y="-12" width="7" height="14" rx="1" fill="#10b981" class="blink-cursor" />
+    <!-- Bottom Command Prompt Line with Blinking Cursor -->
+    <g transform="translate(0, 436)">
+      <text x="0" y="0" class="font-mono" font-size="13" font-weight="700" fill="#10b981">valk@archbox</text>
+      <text x="100" y="0" class="font-mono" font-size="13" fill="#71717a">:</text>
+      <text x="110" y="0" class="font-mono" font-size="13" font-weight="700" fill="#06b6d4">~</text>
+      <text x="122" y="0" class="font-mono" font-size="13" fill="#f4f3ee">$ </text>
+      <rect x="138" y="-12" width="8" height="15" fill="#10b981" class="blink-cursor" />
     </g>
 
   </g>
